@@ -16,10 +16,17 @@
 #     print("You are a millennial")
 # elif year>= 1994 :
 #     print("You are a Gen Z")
-try:
-    age= int(input("How old are you?"))
-except ValueError:
-    print("You have typed in an invalid number, please try agin with a numeric response like 15")
-    age= int(input("How old are you?"))
-if age>18:
-    print(f"You can drive at age {age}.")
+# try:
+#     age= int(input("How old are you?"))
+# except ValueError:
+#     print("You have typed in an invalid number, please try agin with a numeric response like 15")
+#     age= int(input("How old are you?"))
+# if age>18:
+#     print(f"You can drive at age {age}.")
+
+words_per_page = 0
+
+pages=int(input("Number of words per page: "))
+words_per_page = int(input("Number of words per page: "))
+total_words= pages * words_per_page
+print(total_words)
