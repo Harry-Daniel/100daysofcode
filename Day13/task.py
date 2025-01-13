@@ -10,9 +10,16 @@
 # 2. When is the function meant to print "You got it"?
 # 3. What are your assumptions about the value of i?
 
-year = int(input("What's your year of birth "))
+# year = int(input("What's your year of birth "))
 
-if year> 1980 and year<1994:
-    print("You are a millennial")
-elif year>= 1994 :
-    print("You are a Gen Z")
+# if year> 1980 and year<1994:
+#     print("You are a millennial")
+# elif year>= 1994 :
+#     print("You are a Gen Z")
+try:
+    age= int(input("How old are you?"))
+except ValueError:
+    print("You have typed in an invalid number, please try agin with a numeric response like 15")
+    age= int(input("How old are you?"))
+if age>18:
+    print(f"You can drive at age {age}.")
