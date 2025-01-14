@@ -47,7 +47,7 @@ while correct:
     print(vs)
     print(f"B. {comparism(choice2)}")
 
-    guess=input("Who has more followers? Type A or B").lower()
+    guess=input("Who has more followers? Type A or B: ").lower()
     answer= more_followers(choice1,choice2)
     if guess=='a' and choice1 == answer:
         score+=1
@@ -63,6 +63,7 @@ while correct:
     if data_list==[]:
         print("You've won the game")
         break
+    print("\n"*20)
 
 
 
