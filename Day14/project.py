@@ -24,7 +24,8 @@ def more_followers(choice1,choice2):
 correct=True
 score=0
 guess=''
-answer={}
+choice1={}
+choice2={}
 while correct:
     print(logo)
     if not score ==0:
@@ -33,7 +34,7 @@ while correct:
         choice1= random_choice(data_list)
         data_list=remove_random_choice(data_list,choice1)
     else:
-        choice1=answer
+        choice1=choice2
     
     if data_list==[]:
         print("You've won the game")
