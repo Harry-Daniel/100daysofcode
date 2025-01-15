@@ -48,15 +48,12 @@ def customers_order(menu,order,resources):
 
 def total_amount_and_change(quarters,dimes,nickles,pennies,order):
     beverage_cost= MENU[order]['cost']
+    
     total=0
-    for quarter in quarters:
-        total+=0.25
-    for dime in dimes:
-        total+=0.10
-    for nickle in nickles :
-        total+=0.05
-    for penny in pennies:
-        total+=0.01
+    total+=0.25*quarters
+    total+=0.10*dimes
+    total+=0.05*nickles
+    total+=0.01*pennies
 
     if total == beverage_cost:
         return f"Here is your drink. Thank you"
@@ -84,7 +81,7 @@ while  power_on :
             dimes =int(input("How many dimes"))
             nickles =int(input("How many nickles"))
             pennies =int(input("How many pennies"))
-            total_amount_and_change(quarters,dimes,nickles,pennies)
+            print(total_amount_and_change(quarters,dimes,nickles,pennies,order))
     elif order == 'off':
         print("Good Day")
         power_on=False
