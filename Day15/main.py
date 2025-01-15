@@ -86,6 +86,6 @@ while  power_on :
         print("Good Day")
         power_on=False
     elif order =='report':
-        print(resources)
+        print(f"{resources}\n water and milk measured in ml , coffee in g money in $")
     else:
         print("Invalid input")
