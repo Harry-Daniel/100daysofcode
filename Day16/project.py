@@ -23,6 +23,7 @@ while power_on:
         power_on=False
     elif order =='report':
         my_coffee_maker.report()
+        my_money_machine.report()
     else:
         print("Invalid input")
     
