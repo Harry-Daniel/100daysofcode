@@ -1,16 +1,25 @@
-def isZigzag(numbers):
-    result = []
-    for i in range(len(numbers) - 2):
-        a, b, c = numbers[i], numbers[i + 1], numbers[i + 2]
-        if (a < b > c) or (a > b < c):
-            result.append(1)
-        else:
-            result.append(0)
-    return result
+def solution(heights):
+    heights_replica=heights
+    # Adding a replica so when items are removed the pointers dont mess up
+    highlightOrder=[]
+    while True:
+        highlights=[]
+        for index in range(len(heights_replica)):
+            if index == 0:
+                if heights_replica[index]>heights_replica[index+1]:
+                    highlights.append(heights_replica[index])
+                    heights.remove(heights_replica[index])
+            elif index+1 == len(heights_replica)-1:
+                if heights_replica[index-1]<heights_replica[index]:
+                    highlights.append(heights_replica[index])
+                    heights.remove(heights_replica[index])
+            elif not index+1 >= len(heights_replica):
+                if heights_replica[index-1]<heights_replica[index]>heights_replica[index+1]:
+                    highlights.append(heights_replica[index])
+                    heights.remove(heights_replica[index])
+        
+        print(min(highlights))
+        # highlightOrder.append(smallest)
+    return highlightOrder
 
-# Example usage
-if __name__ == '__main__':
-    numbers = list(map(int, input().split()))  # Read input as a list of integers
-    result = isZigzag(numbers)
-    print(result)
-
+print(solution([1,5,4,6,2,9]))
