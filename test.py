@@ -2,6 +2,8 @@ def solution(heights):
     heights_replica=heights
     # Adding a replica so when items are removed the pointers dont mess up
     highlightOrder=[]
+
+    
     while True:
         highlights=[]
         for index in range(len(heights_replica)):
