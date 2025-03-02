@@ -9,9 +9,19 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
-SEC_IN_MIN=1
+SEC_IN_MIN=60
 reps=1
+timer=None
 # ---------------------------- TIMER RESET ------------------------------- # 
+
+def reset_timer():
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text,text="00:00")
+    title_label.config(text="TIMER")
+    checksigns.config(text="")
+    global reps
+    reps=1
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
@@ -50,10 +60,20 @@ def count_down(count):
 
 
     canvas.itemconfig(timer_text,text=f"{count_min}:{count_sec}")
+    global timer
     if count>0:
-        window.after(1000,count_down,count-1)
+       timer= window.after(1000,count_down,count-1)
     else:
         start_timer()
+        marks=""
+        work_sessions=math.floor(reps/2)
+        for _ in range(work_sessions):
+            marks+="✔️"
+        checksigns.config(text=marks)
+
+
+
+        
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -62,7 +82,7 @@ window.title("Pomodoro")
 window.config(padx=100,pady=50,bg=YELLOW)
 
 
-title_label=Label(text="WORK",font=(FONT_NAME,50),bg=YELLOW,fg=GREEN)
+title_label=Label(text="TIMER",font=(FONT_NAME,50),bg=YELLOW,fg=GREEN)
 title_label.grid(column=1,row=0)
 
 canvas= Canvas(width=200, height=224,bg=YELLOW,highlightthickness=0)
@@ -75,11 +95,11 @@ canvas.grid(column=1,row=1)
 start=Button(text='Start',command=start_timer)
 start.grid(column=0,row=2)
 
-reset=Button(text='Reset')
+reset=Button(text='Reset',command=reset_timer)
 reset.grid(column=3,row=2)
 
 
-checksigns=Label(text="✔️",bg=YELLOW,fg=GREEN)
+checksigns=Label(bg=YELLOW,fg=GREEN)
 checksigns.grid(column=1,row=3)
 
 
