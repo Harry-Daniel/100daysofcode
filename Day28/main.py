@@ -9,12 +9,34 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
-
+SEC_IN_MIN=1
+reps=1
 # ---------------------------- TIMER RESET ------------------------------- # 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
-    count_down(5*60)
+    global reps
+    work_sec=WORK_MIN*SEC_IN_MIN
+    short_break_sec= SHORT_BREAK_MIN*SEC_IN_MIN
+    long_break_sec= LONG_BREAK_MIN*SEC_IN_MIN
+
+    if reps%2==1:
+        title_label.config(fg=GREEN,text="WORK")
+        count_down(work_sec)
+    elif reps == 8:
+        title_label.config(fg=RED,text="BREAK")
+        count_down(long_break_sec)
+    elif reps%2==0:
+        title_label.config(fg=PINK,text="BREAK")
+        count_down(short_break_sec)
+
+    # If reps hasn't reached 8 continue adding, once it reaches 8 reps start from 1
+    if reps<8:
+        reps+=1
+    else:
+        reps=1
+
+
 
 
 
@@ -22,13 +44,16 @@ def start_timer():
 def count_down(count):
     count_min= math.floor(count/60)
     count_sec=count%60
-
+    if count_sec<10:
+        count_sec=f"0{count_sec}"
 
 
 
     canvas.itemconfig(timer_text,text=f"{count_min}:{count_sec}")
     if count>0:
         window.after(1000,count_down,count-1)
+    else:
+        start_timer()
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -37,7 +62,7 @@ window.title("Pomodoro")
 window.config(padx=100,pady=50,bg=YELLOW)
 
 
-title_label=Label(text="Timer",font=(FONT_NAME,50),bg=YELLOW,fg=GREEN)
+title_label=Label(text="WORK",font=(FONT_NAME,50),bg=YELLOW,fg=GREEN)
 title_label.grid(column=1,row=0)
 
 canvas= Canvas(width=200, height=224,bg=YELLOW,highlightthickness=0)
