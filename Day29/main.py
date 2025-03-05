@@ -7,10 +7,13 @@ def save():
     website_name=entry_website.get()
     email_u_name=entry_email_uname.get()
     password=entry_password.get()
-    data="|".join(website_name,email_u_name,password)
+    data="|".join([website_name,email_u_name,password+'\n'])
     with open(f"Day29/password.txt",mode="a") as file:
         file.write(data)
 
+    entry_password.delete(0,END)
+    entry_email_uname.delete(0,END)
+    entry_website.delete(0,END)
 
 
 
