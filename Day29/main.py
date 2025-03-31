@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice,randint,shuffle
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 #Password Generator Project
@@ -29,23 +30,34 @@ def generate_password():
     pyperclip.copy(password)
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-    website_name=entry_website.get()
-    email_u_name=entry_email_uname.get()
+    website=entry_website.get()
+    email=entry_email_uname.get()
     password=entry_password.get()
+    new_data={website:{
+        'email':email,
+        'password': password,
+    }}
 
     
 
-    if len(website_name)<1 or len(password)<1:
+    if len(website)<1 or len(password)<1:
         messagebox.showerror(title="Empty Fields",message="No Field should be left empty")
     else:
-        is_ok=messagebox.askokcancel(title=website_name,message=f"These are the details enteredd:\n Email:{email_u_name}\n Password: {password} \n is it okay to save")
-        if is_ok:
-            data="|".join([website_name,email_u_name,password+'\n'])
-            with open(f"Day29/password.txt",mode="a") as file:
-                file.write(data)
-
+        try:
+            with open(f"Day29/password.json",mode="r") as file:
+                # Reading data
+                data=json.load(file)
+                data.update(new_data)
+        except FileNotFoundError:
+            with open(f"Day29/password.json",mode="w") as file:
+                # Create data fle if file doesn't exist
+                json.dump(new_data,file,indent=4)
+        else:        
+            with open(f"Day29/password.json",mode="w") as file:
+                # Saving updated data
+                json.dump(data,file,indent=4)
+        finally:
             entry_password.delete(0,END)
-            entry_email_uname.delete(0,END)
             entry_website.delete(0,END)
 
 
