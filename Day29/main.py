@@ -37,7 +37,6 @@ def save():
         'email':email,
         'password': password,
     }}
-
     
 
     if len(website)<1 or len(password)<1:
@@ -61,8 +60,24 @@ def save():
             entry_website.delete(0,END)
 
 
+# ------------------------------Search--------------------------------------------------- #
 
-
+def find_password():
+    website=entry_website.get()
+    
+    try:
+        with open(f"Day29/password.json",mode="r") as file:
+            # Reading data
+            data=json.load(file)
+            # data.update()
+            print(data[f'{website}'])
+    except FileNotFoundError:
+        messagebox.showerror(title="File not found",message="No data file was found")
+    except KeyError:
+        messagebox.showerror(title="Password not found",message="There is no password for this website")
+    else:        
+        messagebox.askokcancel(title=website,message=f"These are the details:\n Email:{data[f'{website}']['email']}\n Password: {data[f'{website}']['password']} ")
+    
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -89,7 +104,7 @@ label_password.grid(column=0, row=3)
  
 #  Entries
 entry_website = Entry()
-entry_website.grid(column=1, row=1, columnspan=2, sticky="EW")
+entry_website.grid(column=1, row=1,  sticky="EW")
 entry_website.focus()
 entry_email_uname = Entry()
 entry_email_uname.grid(column=1, row=2, columnspan=2, sticky="EW")
@@ -99,6 +114,8 @@ entry_password.grid(column=1, row=3, sticky="EW")
 
 # Buttons
  
+search_btn = Button(text="Search", command=find_password)
+search_btn.grid(column=2, row=1, sticky="EW")
 generate_btn = Button(text="Generate Password", command=generate_password)
 generate_btn.grid(column=2, row=3, sticky="EW")
  
