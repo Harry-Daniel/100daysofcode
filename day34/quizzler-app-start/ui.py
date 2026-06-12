@@ -1,11 +1,13 @@
 from tkinter import *
+from quiz_brain import QuizBrain
 THEME_COLOR = "#375362"
 WHITE="#ffffff"
 BLACK="#000000"
 
 class QuizInterface:
 
-    def __init__(self):
+    def __init__(self,quiz_brain: QuizBrain):
+        self.quiz = quiz_brain
         self.window = Tk()
         self.window.title("Quizzler")
         self.window.minsize(width=300,height=250)
@@ -17,8 +19,11 @@ class QuizInterface:
       
         #canvas 
         self.canvas=Canvas(bg=WHITE, width=300, height=250)
-        self.question_text=self.canvas.create_text(150,
-    125,width=280,text="Amazon acquired Twitch in August 2014 for $970 million dollars.",font=("Arial",20,"italic"),fill=THEME_COLOR)
+        self.question_text=self.canvas.create_text(
+            150,
+            125,
+            width=280,
+            text="Amazon acquired Twitch in August 2014 for $970 million dollars.",font=("Arial",20,"italic"),fill=THEME_COLOR)
         self.canvas.grid(column=0,row=1, columnspan=2,pady=50)
         # Buttons
         false_image=PhotoImage(file="day34/quizzler-app-start/images/false.png",width=100,height=100)
@@ -29,6 +34,12 @@ class QuizInterface:
         self.true_button=Button(image=true_image,highlightthickness=0)
         self.true_button.grid(column=0,row=2)
 
+        self.get_next_question()
+
 
 
         self.window.mainloop()
+
+    def get_next_question(self):
+        q_text=self.quiz.next_question()
+        self.canvas.itemconfig(self.question_text,text=q_text)
